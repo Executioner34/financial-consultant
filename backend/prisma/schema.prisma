@@ -7,8 +7,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+model Income {
+  id       Int       @id @default(autoincrement())
+  value    Int
+  date     DateTime? @default(now())
+  comment  String?
+  category String?
+}
+
+model Expenditure {
+  id       Int       @id @default(autoincrement())
+  value    Int
+  date     DateTime? @default(now())
+  comment  String?
+  category String?
 }
