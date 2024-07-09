@@ -7,10 +7,33 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.5.1",
+    "@vueuse/core": "^10.11.0",
+    "@vueuse/nuxt": "^10.11.0",
+    "normalize.css": "^8.0.1",
     "nuxt": "^3.12.3",
+    "pinia": "^2.1.7",
     "vue": "latest"
-  }
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^0.3.13",
+    "eslint": "^8.57.0",
+    "sass": "^1.77.6"
+  },
+  "overrides": {
+    "vue": "latest"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "> 5%",
+    "not dead"
+  ]
 }
