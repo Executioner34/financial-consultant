@@ -14,7 +14,8 @@ export class IncomeController {
 
     @Get()
     @HttpCode(HttpStatus.OK)
-    async getAll() {const data = await this.incomeService.getIncomes();
+    async getAll() {
+        const data = await this.incomeService.getIncomes();
         return data;
     }
 
