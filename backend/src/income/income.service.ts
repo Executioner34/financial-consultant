@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DbService } from '../db/db.service';
-import { CreateIncome } from './dto';
+import { CreateIncomeDto } from './dto/create-income.dto';
 
 @Injectable()
 export class IncomeService {
@@ -28,7 +28,7 @@ export class IncomeService {
         });
     }
 
-    updateIncome(id: number, data: CreateIncome) {
+    updateIncome(id: number, data: CreateIncomeDto) {
         const formatedDate = new Date(data.date).toISOString();
         return this.db.income.update({
             where: { id },
