@@ -30,7 +30,7 @@ export class IncomeService {
 
     updateIncome(id: number, data: CreateIncomeDto) {
         const formatedDate = new Date(data.date).toISOString();
-        return this.db.income.update({
+        return this.db.income.updateMany({
             where: { id },
             data: {
                 value: Number(data.value),
