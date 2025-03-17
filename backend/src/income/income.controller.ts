@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { IncomeService } from './income.service';
-import { CreateIncomeDto, UpdateIncomeDto } from './dto/create-income.dto';
+import { CreateIncomeDto } from './dto/create-income.dto';
+import { UpdateIncomeDto } from './dto/update-income.dto';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Incomes')
@@ -12,14 +13,14 @@ export class IncomeController {
     @Post()
     @HttpCode(HttpStatus.OK)
     async create(@Body() body: CreateIncomeDto) {
-        await this.incomeService.createIncome(body.value, body.date, body.comment, body.category);
+        return this.incomeService.createIncome(body);
     }
 
     @ApiOperation({ summary: 'Return all incomes' })
     @Get()
     @HttpCode(HttpStatus.OK)
     async getAll() {
-        return this.incomeService.getIncomes();
+        return this.incomeService.findAllIncomes();
     }
 
     @ApiOperation({ summary: 'Return one income' })
@@ -27,23 +28,19 @@ export class IncomeController {
     @Get(':id')
     @HttpCode(HttpStatus.OK)
     async getOne(@Param('id') id: string) {
-        const data = await this.incomeService.getIncome(Number(id));
-        if (data) {
-            return data;
-        }
-        throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+        const item = await this.incomeService.findOneIncome(Number(id));
+        if (!item) throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+        return item;
     }
 
     @ApiOperation({ summary: 'Update income' })
     @ApiParam({ name: 'id', required: true })
-    @Put(':id')
+    @Patch(':id')
     @HttpCode(HttpStatus.OK)
     async update(@Param('id') id: string, @Body() body: UpdateIncomeDto) {
-        const data = await this.incomeService.updateIncome(Number(id), body);
-        if (data.count) {
-            return data;
-        }
-        throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+        const item = await this.incomeService.updateIncome(Number(id), body);
+        if (!item.count) throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+        return item;
     }
 
     @ApiOperation({ summary: 'Delete income' })
@@ -51,10 +48,8 @@ export class IncomeController {
     @ApiParam({ name: 'id', required: true })
     @HttpCode(HttpStatus.OK)
     async delete(@Param('id') id: string) {
-        const data = await this.incomeService.deleteIncome(Number(id));
-        if (data) {
-            return data;
-        }
-        throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+        const item = await this.incomeService.deleteIncome(Number(id));
+        if (!item) throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+        return item;
     }
 }

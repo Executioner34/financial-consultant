@@ -1,15 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateIncomeDto {
+export class UpdateIncomeDto {
     @ApiProperty({
         example: '1000',
     })
-    value: string;
+    value?: string;
 
     @ApiProperty({
         example: new Date(),
     })
-    date: string;
+    date?: string;
 
     @ApiProperty({
         example: 'comment',

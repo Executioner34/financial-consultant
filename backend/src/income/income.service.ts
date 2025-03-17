@@ -1,34 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { DbService } from '../db/db.service';
 import { CreateIncomeDto } from './dto/create-income.dto';
+import { UpdateIncomeDto } from './dto/update-income.dto';
 
 @Injectable()
 export class IncomeService {
     constructor(private db: DbService) {}
 
-    getIncomes() {
+    findAllIncomes() {
         return this.db.income.findMany();
     }
 
-    getIncome(id: number) {
+    findOneIncome(id: number) {
         return this.db.income.findUnique({
             where: { id },
         });
     }
 
-    createIncome(value: string, date: string, comment: string, category: string) {
-        const formatedDate = new Date(date).toISOString();
+    createIncome(data: CreateIncomeDto) {
+        const formatedDate = new Date(data.date).toISOString();
         return this.db.income.create({
             data: {
-                value: Number(value),
+                value: Number(data.value),
                 date: formatedDate,
-                comment: comment,
-                category: category,
+                comment: data.comment,
+                category: data.category,
             },
         });
     }
 
-    updateIncome(id: number, data: CreateIncomeDto) {
+    updateIncome(id: number, data: UpdateIncomeDto) {
         const formatedDate = new Date(data.date).toISOString();
         return this.db.income.updateMany({
             where: { id },

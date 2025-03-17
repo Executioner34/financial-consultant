@@ -15,7 +15,7 @@ model Income {
   category String?
 }
 
-model Expenditure {
+model Expense {
   id       Int       @id @default(autoincrement())
   value    Int
   date     DateTime? @default(now())
